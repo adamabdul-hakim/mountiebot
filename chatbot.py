@@ -17,20 +17,20 @@ bot_model = load_model('chatbot_model.keras')
 
 
 # Function to clean and tokenize input text
-def cleaning(text):
-    words = nltk.word_tokenize(text)
+def cleaning(text_in):
+    words = nltk.word_tokenize(text_in)
     words = [lemmatizer.lemmatize(word.lower()) for word in words]
     return words
 
 
 # Function to convert text into a bag of words
-def bag_ow(text, words, show_details=True):
-    sentence_words = cleaning(text)
+def bag_ow(text_in, words, show_details=True):
+    sentence_words = cleaning(text_in)
     bag_of_words = [0] * len(words)
     for s in sentence_words:
-        for i, w in enumerate(words):
+        for ind, w in enumerate(words):
             if w == s:
-                bag_of_words[i] = 1
+                bag_of_words[ind] = 1
     return np.array(bag_of_words)
 
 
@@ -59,13 +59,13 @@ def get_bot_response(ints, intents):
 
 
 # Main function to get the bot response
-def bot_response(text):
-    ints = class_prediction(text, bot_model)
+def bot_response(text_input):
+    ints = class_prediction(text_input, bot_model)
     response = get_bot_response(ints, intents_file)
     return response
 
 
 # Chat loop
-for i in range(10):
+for i in range(5):
     text = input("You : ")
     print(bot_response(text))

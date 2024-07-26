@@ -3,7 +3,7 @@
     {
       "tag": "welcome",
       "patterns": ["Hello", "Hi", "Hey", "Hello there", "Hey there", "Hi there!", "Good morning", "Good afternoon", "Good evening", "Howdy", "Greetings", "Hiya", "Hi MountaineerBot", "What's up?", "Yo"],
-      "responses": ["Hello, I'm MountaineerBot. Feel free to ask me any questions about Berea College!", "Hey, it's good to see you", "Hi there, how can I help you?", "Hello! I'm here to help. What do you need?", "Hello! How's it going?"],
+      "responses": ["Hello, I'm MountieBot. Feel free to ask me any questions about Berea College!", "Hey, it's good to see you. How may I help you?", "Hi there, what can I do for you?", "Hello! I'm here to help. Ask me any question about Berea College.", "Hello! Let me know how I can help!"],
       "context_set": "greetings"
     },
     {
@@ -19,8 +19,8 @@
     },
     {
       "tag": "no_answer",
-      "patterns": [],
-      "responses": ["Sorry, Could you repeat that?", "Please provide me more information"]
+      "patterns": [""],
+      "responses": ["Sorry, Could you repeat that?", "What was that?"]
     },
     {
       "tag": "goodbye",
