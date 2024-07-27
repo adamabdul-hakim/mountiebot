@@ -15,17 +15,22 @@
     {
       "tag": "thanks",
       "patterns": ["Thanks", "Thank you", "That was helpful","Thank you for providing the valuable information", "Awesome, thanks for helping"],
-      "responses": ["Happy to help you", "I am glad that helped!", "It's my pleasure to help you", "Feel free to reach out in case you have more questions."]
+      "responses": ["Happy to help you", "I am glad that helped!", "Feel free to reach out in case you have more questions.", "It's my pleasure to help you"]
     },
     {
-      "tag": "no_answer",
-      "patterns": [""],
-      "responses": ["Sorry, Could you repeat that?", "What was that?"]
+      "tag": "no_input",
+      "patterns": [],
+      "responses": ["I didn't get any input. Could you please type something?"]
+    },
+    {
+      "tag": "unknown",
+      "patterns": [],
+      "responses": ["I'm not sure how to respond to that. Could you please rephrase your question?"]
     },
     {
       "tag": "goodbye",
-      "patterns": ["bye bye", "Nice to chat with you", "Bye", "See you later buddy", "Goodbye"],
-      "responses": ["Bye bye, thanks for reaching out.", "Have a nice day!", "See you later!"]
+      "patterns": ["bye bye", "Nice to chat with you", "bye", "later", "Goodbye"],
+      "responses": ["Enjoy your day!", "Have a nice day!", "See you later!", "Look forward to talking to you again."]
     },
     {
       "tag": "admission",

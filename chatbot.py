@@ -36,6 +36,9 @@ def bag_ow(text_in, words, show_details=True):
 
 # Function to predict the class of the input sentence
 def class_prediction(sentence, model):
+    if sentence.strip() == "":
+        return [{"intent": "no_input", "probability": "1.0"}]
+
     p = bag_ow(sentence, lem_words, show_details=False)
     result = model.predict(np.array([p]))[0]
     ER_THRESHOLD = 0.30
@@ -44,6 +47,8 @@ def class_prediction(sentence, model):
     intent_prob_list = []
     for i in f_results:
         intent_prob_list.append({"intent": classes[i[0]], "probability": str(i[1])})
+    if not intent_prob_list:
+        intent_prob_list.append({"intent": "unknown", "probability": "1.0"})
     return intent_prob_list
 
 
@@ -66,6 +71,6 @@ def bot_response(text_input):
 
 
 # Chat loop
-for i in range(5):
-    text = input("You : ")
-    print(bot_response(text))
+while True:
+    user_input = input("You : ")
+    print(bot_response(user_input))
