@@ -72,5 +72,5 @@ def bot_response(text_input):
 
 # Chat loop
 while True:
-    user_input = input("You : ")
+    user_input = input("You: ")
     print(bot_response(user_input))
