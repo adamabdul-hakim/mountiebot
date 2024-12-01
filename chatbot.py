@@ -56,6 +56,7 @@ def class_prediction(sentence, model):
 def get_bot_response(ints, intents):
     tag = ints[0]['intent']
     intents_list = intents['intents']
+    result = "I'm sorry, I don't understand that."  # Default response
     for intent in intents_list:
         if intent['tag'] == tag:
             result = random.choice(intent['responses'])
