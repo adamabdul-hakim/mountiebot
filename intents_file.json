@@ -66,6 +66,11 @@
       "tag": "history",
       "patterns": ["Tell me about the history of Berea College", "When was Berea College founded?", "What is the background of Berea College?", "Share some historical information about Berea College"],
       "responses": ["Berea College was founded in 1855 and is known for its commitment to interracial education and social justice. It was the first integrated coeducational college in the South.", "Founded in 1855, Berea College has a rich history of promoting equality and providing free education to students from low-income backgrounds."]
+    },
+    {
+  "tag": "berea-bubble",
+  "patterns": ["What is the Berea Bubble?", "Tell me about the Berea Bubble", "What does Berea Bubble mean?", "Explain the concept of the Berea Bubble"],
+  "responses": ["The 'Berea Bubble' refers to the close-knit and unique campus environment at Berea College. It often describes the sense of community and the somewhat isolated nature of the college from the outside world.", "The Berea Bubble is a term used by students to describe the strong community bond and immersive experience within the Berea College campus."]
     }
   ]
 }
