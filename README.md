@@ -26,7 +26,7 @@ mountiebot/
 ├── backend/               # Python backend with chatbot logic
 │   ├── data/              # Pickled model and metadata
 │   ├── intents/           # JSON file with chatbot intents
-│   ├── mountiebot/        # Core logic: training, inference, utils, Flask app
+│   ├── mountiebot/        # Core logic
 │   ├── tests/             # Unit tests
 │   └── requirements.txt   # Python dependencies
 │
