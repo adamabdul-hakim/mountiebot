@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from mountiebot.chatbot import bot_response
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/ping", methods=["GET"])
 def ping():

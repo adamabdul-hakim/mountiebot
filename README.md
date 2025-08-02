@@ -1,56 +1,93 @@
-# MountieBot
+# 🧠 MountieBot
 
-## Overview
+MountieBot is an AI-powered chatbot built with TensorFlow, NLTK, Flask, and React. It is designed to answer questions related to Berea College, offering an engaging and visually appealing chat interface.
 
-MountieBot is a chatbot built using Python, TensorFlow, and NLTK. It processes user inputs, predicts the intent, and provides appropriate responses based on predefined intents and responses stored in a JSON file. This README provides a comprehensive guide on how to set up, train, and run MountieBot.
+## 🚀 Features
 
-## Features
+### Backend (Flask + TensorFlow)
 
-- Tokenizes and lemmatizes input text for processing.
-- Utilizes a neural network model for intent classification.
-- Generates responses based on the predicted intent.
-- Saves and loads model and data for efficient use.
+- Intent classification with neural network (TensorFlow/Keras)
+- Preprocessing with NLTK (tokenization, lemmatization)
+- Trainable on custom intents via JSON
+- API endpoint `/chat` to receive and respond to messages
 
-## Setup
+### Frontend (React + Tailwind CSS)
 
-### Prerequisites
+- Fully responsive design
+- Light/Dark theme toggle with persistence
+- Background image with a blurred chat window
+- Animated message loading
+- Styled chat bubbles for user and bot
 
-Before running MountieBot, ensure you have the following installed:
+## 🛠️ Project Structure
 
-- Python 3.x
-- NLTK
-- TensorFlow
-- Keras
-- NumPy
-
-You can install the required Python packages using pip:
-
-```sh
-pip install numpy nltk tensorflow keras
+```
+mountiebot/
+├── backend/               # Python backend with chatbot logic
+│   ├── data/              # Pickled model and metadata
+│   ├── intents/           # JSON file with chatbot intents
+│   ├── mountiebot/        # Core logic: training, inference, utils, Flask app
+│   ├── tests/             # Unit tests
+│   └── requirements.txt   # Python dependencies
+│
+├── frontend/              # React frontend
+│   ├── public/            # Static assets (e.g. images)
+│   ├── src/               # Application source code
+│   ├── package.json       # Project metadata and scripts
+│   └── tailwind.config.js # Tailwind CSS config
+│
+├── .gitignore             # unversioned files
+└── README.md              # Project overview and instructions
 ```
 
-### Download NLTK Data
+## 📦 Setup Instructions
 
-MountieBot requires specific NLTK data packages. Downlaod them using the following comands:
+### 1. Clone the repo
 
-```sh
-import nltk
-nltk.download('punkt')
-nltk.download('wordnet')
+```bash
+git clone https://github.com/adamabdul-hakim/mountiebot.git
 ```
 
-## Training the Model
+### 2. Backend Setup (Python)
 
-During training, the script will:
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+pip install -r requirements.txt
+python mountiebot/main.py   # Train the model
+python app.py
+```
 
-- Load and process the intents from the JSON file.
-- Tokenize and lemmatize the patterns.
-- Create training data.
-- Build and train the neural network model.
-- Save the lemmatized words, classes, and trained model.
+### 3. Frontend Setup (React)
 
-## Running the Chatbot
-After training, the script enters a chat loop where it continuously takes user input and responds accordingly.
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## Improvements
-Since the bot relies on predefined responses, I am currently expanding the intents file to accommodate more user inputs.
+## 🧪 Example Prompt
+
+> "I'm an international student. Can I apply?"
+
+**Response:**
+
+> "Yes, Berea College welcomes international students and provides full tuition scholarships..."
+
+## 📚 Learnings & Limitations
+
+- 🧠 Great intro to ML: Built custom intent classification model using simple NLP pipeline
+- ⚠️ Not very robust to paraphrased or novel input
+- 📈 Could be improved with:
+  - Embedding-based models (e.g., sentence-transformers)
+  - Retrieval-augmented generation (RAG)
+  - Larger dataset of questions and answers
+
+## 🏫 About
+
+This project was created for learning purposes to help students learn more about Berea College using an interactive chatbot interface.
+
+---
+
+Made with ❤️ by Abdul
