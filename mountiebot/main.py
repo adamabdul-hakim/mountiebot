@@ -3,23 +3,18 @@ import nltk
 import json
 import pickle
 import random
-from nltk.stem import WordNetLemmatizer
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
+from mountiebot.utils import clean_text
 
 # Download NLTK data
 nltk.download('punkt')
 nltk.download('wordnet')
 
-# Initialize lemmatizer
-lemmatizer = WordNetLemmatizer()
-
-
 def load_intents(file_path):
     with open(file_path) as file:
         return json.load(file)
-
 
 def process_patterns(intents):
     tokenized_words = []
@@ -35,21 +30,21 @@ def process_patterns(intents):
             if intent['tag'] not in classes:
                 classes.append(intent['tag'])
 
-    lemmatized_words = sorted(list(set([lemmatizer.lemmatize(w.lower()) for w in tokenized_words if w not in ignoring_words])))
+    lemmatized_words = sorted(
+        list(set([word.lower() for word in tokenized_words if word not in ignoring_words]))
+    )
+    lemmatized_words = sorted(list(set(clean_text(" ".join(lemmatized_words)))))
     classes = sorted(list(set(classes)))
 
     return lemmatized_words, classes, documents
-
 
 def create_training_data(lemmatized_words, classes, documents):
     training_data = []
     empty_array = [0] * len(classes)
 
     for doc in documents:
-        bag_of_words = []
-        pattern_words = [lemmatizer.lemmatize(word.lower()) for word in doc[0]]
-        for w in lemmatized_words:
-            bag_of_words.append(1 if w in pattern_words else 0)
+        pattern_words = clean_text(" ".join(doc[0]))
+        bag_of_words = [1 if w in pattern_words else 0 for w in lemmatized_words]
 
         output_row = list(empty_array)
         output_row[classes.index(doc[1])] = 1
@@ -61,7 +56,6 @@ def create_training_data(lemmatized_words, classes, documents):
     train_y = np.array([item[1] for item in training_data])
 
     return train_x, train_y
-
 
 def build_model(input_shape, output_shape):
     model = Sequential()
@@ -76,21 +70,19 @@ def build_model(input_shape, output_shape):
 
     return model
 
-
 def main():
-    intents = load_intents('intents_file.json')
+    intents = load_intents('intents/intents_file.json')
     lemmatized_words, classes, documents = process_patterns(intents)
 
-    pickle.dump(lemmatized_words, open('lem_words.pkl', 'wb'))
-    pickle.dump(classes, open('classes.pkl', 'wb'))
+    pickle.dump(lemmatized_words, open('data/lem_words.pkl', 'wb'))
+    pickle.dump(classes, open('data/classes.pkl', 'wb'))
 
     train_x, train_y = create_training_data(lemmatized_words, classes, documents)
 
     model = build_model(len(train_x[0]), len(train_y[0]))
     model.fit(train_x, train_y, epochs=200, batch_size=5, verbose=1)
 
-    model.save('MountieBot_model.keras')
-
+    model.save('data/chatbot_model.keras')
 
 if __name__ == "__main__":
     main()
