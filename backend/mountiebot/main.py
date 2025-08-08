@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import nltk
 import json
@@ -6,11 +7,16 @@ import random
 from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
-from mountiebot.utils import clean_text
+from .utils import clean_text
 
 # Download NLTK data
 nltk.download('punkt')
 nltk.download('wordnet')
+
+# Paths
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+INTENTS_PATH = os.path.join(BASE_DIR, 'intents', 'intents_file.json')
+DATA_DIR = os.path.join(BASE_DIR, 'data')
 
 def load_intents(file_path):
     with open(file_path) as file:
@@ -71,18 +77,18 @@ def build_model(input_shape, output_shape):
     return model
 
 def main():
-    intents = load_intents('intents/intents_file.json')
+    intents = load_intents(INTENTS_PATH)
     lemmatized_words, classes, documents = process_patterns(intents)
 
-    pickle.dump(lemmatized_words, open('data/lem_words.pkl', 'wb'))
-    pickle.dump(classes, open('data/classes.pkl', 'wb'))
+    pickle.dump(lemmatized_words, open(os.path.join(DATA_DIR, 'lem_words.pkl'), 'wb'))
+    pickle.dump(classes, open(os.path.join(DATA_DIR, 'classes.pkl'), 'wb'))
 
     train_x, train_y = create_training_data(lemmatized_words, classes, documents)
 
     model = build_model(len(train_x[0]), len(train_y[0]))
     model.fit(train_x, train_y, epochs=200, batch_size=5, verbose=1)
 
-    model.save('data/chatbot_model.keras')
+    model.save(os.path.join(DATA_DIR, 'chatbot_model.keras'))
 
 if __name__ == "__main__":
     main()

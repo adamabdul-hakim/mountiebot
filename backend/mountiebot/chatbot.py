@@ -1,3 +1,4 @@
+import os
 import pickle
 import nltk
 import numpy as np
@@ -6,11 +7,16 @@ from keras.models import load_model
 import random
 from mountiebot.utils import clean_text, bag_of_words
 
+# Define file paths
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+INTENTS_PATH = os.path.join(BASE_DIR, 'intents', 'intents_file.json')
+
 # Load data files
-intents_file = json.loads(open('intents/intents_file.json').read())
-lem_words = pickle.load(open('data/lem_words.pkl', 'rb'))
-classes = pickle.load(open('data/classes.pkl', 'rb'))
-bot_model = load_model('data/chatbot_model.keras')
+intents_file = json.load(open(INTENTS_PATH))
+lem_words = pickle.load(open(os.path.join(DATA_DIR, 'lem_words.pkl'), 'rb'))
+classes = pickle.load(open(os.path.join(DATA_DIR, 'classes.pkl'), 'rb'))
+bot_model = load_model(os.path.join(DATA_DIR, 'chatbot_model.keras'))
 
 def class_prediction(sentence, model):
     if sentence.strip() == "":
@@ -18,7 +24,7 @@ def class_prediction(sentence, model):
 
     p = bag_of_words(sentence, lem_words)
     result = model.predict(np.array([p]))[0]
-    ER_THRESHOLD = 0.60
+    ER_THRESHOLD = 0.45
     f_results = [[i, r] for i, r in enumerate(result) if r > ER_THRESHOLD]
     f_results.sort(key=lambda x: x[1], reverse=True)
     intent_prob_list = []
@@ -48,4 +54,3 @@ if __name__ == "__main__":
     while True:
         user_input = input("You: ")
         print(bot_response(user_input))
-

@@ -53,13 +53,12 @@ git clone https://github.com/adamabdul-hakim/mountiebot.git
 > ⚠️ Use Python 3.8–3.12. Python 3.13 is not supported due to NLTK compatibility.
 
 ```bash
-cd backend
-python -m venv venv
+python -m venv .venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
+cd backend
 pip install -r requirements.txt
-python -m nltk.downloader punkt wordnet
-python mountiebot/main.py   # Train the model
-python mountiebot/app.py    # Start API server
+python -m mountiebot.main   # Train the model 
+python app.py    # Start API server
 ```
 
 ### 3. Frontend Setup (React)
